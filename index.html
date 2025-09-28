@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>autoayuda</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🧠</div>
+            <h1>Centro de Bienestar Emocional</h1>
+            <p>Evaluación psicológica personalizada para tu desarrollo personal</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <!-- Sección 1: Información personal -->
+        <div class="section active" id="section1">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">📋 Información Personal</h2>
+            <p style="color: #7f8c8d; margin-bottom: 25px;">Para brindarte una evaluación precisa, necesitamos conocer algunos datos básicos sobre ti.</p>
+            
+            <div class="form-group">
+                <label for="nombre">Nombre completo:</label>
+                <input type="text" id="nombre" placeholder="Escribe tu nombre...">
+            </div>
+
+            <div class="form-group">
+                <label for="edad">Edad:</label>
+                <input type="number" id="edad" min="13" max="100" placeholder="Tu edad...">
+            </div>
+
+            <div class="form-group">
+                <label>¿Cómo describirías tu estado emocional actual?</label>
+                <div class="mood-grid">
+                    <div class="mood-option" data-mood="feliz">😊 Positivo/Feliz</div>
+                    <div class="mood-option" data-mood="triste">😔 Melancólico/Triste</div>
+                    <div class="mood-option" data-mood="estresado">😰 Ansioso/Estresado</div>
+                    <div class="mood-option" data-mood="aburrido">😐 Neutral/Aburrido</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="nextSection(2)">Continuar evaluación →</button>
+        </div>
+
+        <!-- Sección 2: Hábitos y comportamiento -->
+        <div class="section" id="section2">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">🔍 Análisis de Comportamiento</h2>
+            <p style="color: #7f8c8d; margin-bottom: 25px;">Estas preguntas nos ayudarán a entender mejor tus patrones de comportamiento.</p>
+            
+            <div class="question-card">
+                <label for="estres">¿Cuál es tu estrategia principal para manejar situaciones estresantes?</label>
+                <select id="estres">
+                    <option value="">Selecciona una opción...</option>
+                    <option value="ejercicio">Practico ejercicio o actividad física</option>
+                    <option value="comida">Como o bebo para relajarme</option>
+                    <option value="netflix">Veo series, películas o videos</option>
+                    <option value="procrastino">Pospongo las tareas para más tarde</option>
+                    <option value="grito">Expreso mis emociones verbalmente</option>
+                </select>
+            </div>
+
+            <div class="question-card">
+                <label for="sueno">¿Cuántas horas duermes normalmente por noche?</label>
+                <select id="sueno">
+                    <option value="">Selecciona...</option>
+                    <option value="mucho">Más de 9 horas</option>
+                    <option value="normal">Entre 7-8 horas</option>
+                    <option value="poco">Entre 5-6 horas</option>
+                    <option value="insomne">Menos de 5 horas</option>
+                </select>
+            </div>
+
+            <div class="question-card">
+                <label for="tiempo_libre">Describe brevemente cómo sueles pasar tu tiempo libre:</label>
+                <textarea id="tiempo_libre" rows="3" placeholder="Por ejemplo: leo, socializo con amigos, practico hobbies, etc."></textarea>
+            </div>
+
+            <button class="btn btn-secondary" onclick="nextSection(1)">← Anterior</button>
+            <button class="btn" onclick="nextSection(3)">Continuar →</button>
+        </div>
+
+        <!-- Sección 3: Evaluación profunda -->
+        <div class="section" id="section3">
+            <h2 style="color: #2c3e50; margin-bottom: 20px;">🎯 Evaluación Psicológica</h2>
+            <p style="color: #7f8c8d; margin-bottom: 25px;">Esta última sección nos permitirá realizar un análisis más profundo de tu perfil emocional.</p>
+            
+            <div class="question-card">
+                <label for="mayor_miedo">¿Cuáles son tus principales preocupaciones o desafíos actuales?</label>
+                <textarea id="mayor_miedo" rows="4" placeholder="Describe brevemente qué aspectos de tu vida te generan más inquietud..."></textarea>
+            </div>
+
+            <div class="warning-box">
+                <strong>Nota:</strong> Esta evaluación es con fines de entretenimiento. Para problemas serios de salud mental, consulta con un profesional calificado.
+            </div>
+
+            <button class="btn btn-secondary" onclick="nextSection(2)">← Anterior</button>
+            <button class="btn" onclick="generateReport()">📊 Generar Reporte Psicológico</button>
+        </div>
+
+        <!-- Sección de carga -->
+        <div class="section" id="loading">
+            <div class="loading">
+                <div class="spinner"></div>
+                <h3>Analizando tu perfil psicológico...</h3>
+                <p>Nuestros algoritmos están procesando tus respuestas</p>
+            </div>
+        </div>
+
+        <!-- Sección 4: Resultado -->
+        <div class="section" id="section4">
+            <div class="result-section">
+                <div class="result-header">
+                    <h2 style="color: #2c3e50;">📋 Reporte Psicológico Personalizado</h2>
+                </div>
+                
+                <div class="meme-container" id="memeContainer">
+                    🎭
+                </div>
+
+                <div class="result-content" id="resultContent">
+                    <!-- El resultado se generará aquí -->
+                </div>
+
+                <div class="disclaimer">
+                    * Este análisis es generado automáticamente con fines de entretenimiento<br>
+                    Para apoyo psicológico real, contacta a un profesional de la salud mental
+                </div>
+
+                <button class="btn" onclick="location.reload()">🔄 Nueva Evaluación</button>
+                <button class="btn btn-secondary" onclick="shareResults()">📤 Compartir Resultados</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 1;
+        let selectedMood = '';
+        let userData = {};
+
+        // Manejo de selección de estado de ánimo
+        document.querySelectorAll('.mood-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.mood-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedMood = this.dataset.mood;
+            });
+        });
+
+        function nextSection(sectionNum) {
+            // Validar sección actual
+            if (currentSection === 1 && !validateSection1()) return;
+            if (currentSection === 2 && !validateSection2()) return;
+
+            // Ocultar sección actual
+            document.getElementById(`section${currentSection}`).classList.remove('active');
+            
+            // Mostrar nueva sección
+            currentSection = sectionNum;
+            document.getElementById(`section${currentSection}`).classList.add('active');
+            
+            // Actualizar barra de progreso
+            updateProgress();
+        }
+
+        function validateSection1() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const edad = document.getElementById('edad').value;
+            
+            if (!nombre) {
+                alert('Por favor, ingresa tu nombre para continuar.');
+                return false;
+            }
+            if (!edad || edad < 13) {
+                alert('Por favor, ingresa una edad válida.');
+                return false;
+            }
+            if (!selectedMood) {
+                alert('Por favor, selecciona tu estado emocional actual.');
+                return false;
+            }
+            return true;
+        }
+
+        function validateSection2() {
+            const estres = document.getElementById('estres').value;
+            const sueno = document.getElementById('sueno').value;
+            const tiempo_libre = document.getElementById('tiempo_libre').value.trim();
+            
+            if (!estres || !sueno || !tiempo_libre) {
+                alert('Por favor, completa todas las preguntas para continuar con la evaluación.');
+                return false;
+            }
+            return true;
+        }
+
+        function updateProgress() {
+            const progress = (currentSection / 4) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function generateReport() {
+            // Mostrar pantalla de carga
+            document.getElementById('section3').classList.remove('active');
+            document.getElementById('loading').classList.add('active');
+            
+            // Simular tiempo de procesamiento
+            setTimeout(() => {
+                // Recopilar datos
+                userData = {
+                    nombre: document.getElementById('nombre').value.trim(),
+                    edad: parseInt(document.getElementById('edad').value),
+                    mood: selectedMood,
+                    estres: document.getElementById('estres').value,
+                    sueno: document.getElementById('sueno').value,
+                    tiempo_libre: document.getElementById('tiempo_libre').value.trim(),
+                    mayor_miedo: document.getElementById('mayor_miedo').value.trim()
+                };
+
+                // Generar el "reporte"
+                const report = createPsychologicalReport(userData);
+                const emoji = getReportEmoji(userData.mood);
+                
+                // Mostrar resultado
+                document.getElementById('resultContent').innerHTML = report;
+                document.getElementById('memeContainer').innerHTML = emoji;
+                
+                // Cambiar a sección de resultados
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('section4').classList.add('active');
+                updateProgress();
+            }, 3000);
+        }
+
+        function createPsychologicalReport(data) {
+            let report = `<h3 style="color: #ecf0f1; margin-bottom: 20px;">Análisis para ${data.nombre}</h3>`;
+            
+            report += `<p style="margin-bottom: 15px;"><strong>Edad:</strong> ${data.edad} años</p>`;
+            
+            // Aquí es donde se vuelve sarcástico, pero disfrazado como "profesional"
+            switch(data.mood) {
+                case 'feliz':
+                    report += `<p><strong>Estado Emocional:</strong> Reporta sentirse "positivo". Interesante... a tu edad y con esa sonrisa forzada, es como ver a alguien fingiendo que todo está bien mientras su vida se desmorona. Tu felicidad parece más artificial que el azúcar de una coca light.</p>`;
+                    break;
+                case 'triste':
+                    report += `<p><strong>Estado Emocional:</strong> Melancólico. Qué original, ${data.nombre}. A los ${data.edad} años y todavía dramatizando por la vida como si fueras el protagonista de una telenovela. Tu tristeza es tan predecible como el final de Titanic.</p>`;
+                    break;
+                case 'estresado':
+                    report += `<p><strong>Estado Emocional:</strong> Ansioso/Estresado. ¿En serio? Eres el tipo de persona que se estresa hasta por elegir qué cereal desayunar. Tu nivel de ansiedad es más alto que tus expectativas irreales de la vida.</p>`;
+                    break;
+                case 'aburrido':
+                    report += `<p><strong>Estado Emocional:</strong> Neutral/Aburrido. Tu personalidad es tan emocionante como ver pintura secarse. Incluso tu propia reflexión en el espejo se queda dormida.</p>`;
+                    break;
+            }
+
+            // Análisis del manejo del estrés
+            report += `<br><p><strong>Estrategias de Afrontamiento:</strong> `;
+            switch(data.estres) {
+                case 'ejercicio':
+                    report += `Dice hacer ejercicio para el estrés. Seguramente su idea de "cardio intenso" es subir las escaleras corriendo porque se le olvida el teléfono.</p>`;
+                    break;
+                case 'comida':
+                    report += `Maneja el estrés comiendo. Básicamente eres un refrigerador emocional con piernas. Tus sentimientos tienen más grasa saturada que una hamburguesa de McDonald's.</p>`;
+                    break;
+                case 'netflix':
+                    report += `Ve series para relajarse. Eres la razón por la que Netflix pregunta "¿Sigues viendo?" - hasta la plataforma está preocupada por tu salud mental y productividad.</p>`;
+                    break;
+                case 'procrastino':
+                    report += `Procrastina cuando está estresado. Es como intentar apagar un incendio echándole más leña. Tu productividad es tan baja que harías que un perezoso parezca hiperactivo.</p>`;
+                    break;
+                case 'grito':
+                    report += `Expresa sus emociones "verbalmente". Una forma elegante de decir que le grita a objetos inanimados que no pueden huir de ti, a diferencia de las personas.</p>`;
+                    break;
+            }
+
+            // Análisis del sueño
+            switch(data.sueno) {
+                case 'mucho':
+                    report += `<p><strong>Patrones de Sueño:</strong> Más de 9 horas diarias. Duermes tanto que tu cama ya te está cobrando alquiler. Es impresionante cómo puedes dormir tanto y aún así verte cansado de la vida.</p>`;
+                    break;
+                case 'normal':
+                    report += `<p><strong>Patrones de Sueño:</strong> 7-8 horas. Qué aburrido y responsable. Eres tan predecible que hasta tu rutina de sueño hace bostezar a los demás.</p>`;
+                    break;
+                case 'poco':
+                    report += `<p><strong>Patrones de Sueño:</strong> 5-6 horas. Eres la definición viviente de autosabotaje. Tu cuerpo te odia más que tus ex.</p>`;
+                    break;
+                case 'insomne':
+                    report += `<p><strong>Patrones de Sueño:</strong> Menos de 5 horas. Eres un vampiro sin los beneficios geniales. Tienes más ojeras que un panda deprimido en rehabilitación.</p>`;
+                    break;
+            }
+
+            // Conclusión "profesional"
+            report += `<br><p><strong>Conclusión del Análisis:</strong> Estimado/a ${data.nombre}, después de este exhaustivo análisis psicológico, podemos concluir que tu vida es como una serie que cancelaron en la primera temporada: tenía potencial, pero nadie quiso seguir viéndola.</p>`;
+            
+            if (data.mayor_miedo && data.mayor_miedo.length > 5) {
+                report += `<p>Sobre tus preocupaciones actuales... tranquilo, con el resto de tu personalidad, es lo de menos que deberías preocuparte.</p>`;
+            }
+
+            report += `<br><p><strong>Recomendación Profesional:</strong> Necesitas terapia... y nosotros también después de analizar tu caso. Por favor, busca ayuda profesional real. Este consultorio ficticio ya hizo suficiente daño por hoy. 🎭</p>`;
+
+            return report;
+        }
+
+        function getReportEmoji(mood) {
+            const emojis = {
+                'feliz': '🤡',
+                'triste': '😭', 
+                'estresado': '🤯',
+                'aburrido': '😴'
+            };
+            return emojis[mood] || '💀';
+        }
+
+        function shareResults() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mi Evaluación Psicológica',
+                    text: 'Acabo de hacer una evaluación psicológica y... bueno, mejor véanlo ustedes mismos 😅',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback para browsers que no soportan Web Share API
+                const shareText = `Acabo de hacer una "evaluación psicológica" en ${window.location.href} y el resultado fue... revelador 😂`;
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('¡Texto copiado al portapapeles! Ya puedes compartir tu trauma con amigos.');
+                });
+            }
+        }
+
+        // Inicializar barra de progreso
+        updateProgress();
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
